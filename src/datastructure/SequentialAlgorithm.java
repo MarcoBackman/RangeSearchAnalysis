@@ -70,13 +70,6 @@ public class SequentialAlgorithm {
 
     DataCarrier carrier
       = new DataCarrier(resultNode, closestDistance);
-    if (resultNode == null) {
-      System.out.println("Unexpected error occured");
-    } else {
-      System.out.println("Closest distance is: " + closestDistance);
-      System.out.println("Node info: \n" + resultNode.getPoints().toString());
-    }
-
     return carrier;
   }
 }

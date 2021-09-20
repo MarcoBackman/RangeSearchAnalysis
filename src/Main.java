@@ -134,7 +134,8 @@ class Main {
     DataCarrier result = sequential.findCloestDistance(inputPoints);
     String resultInString = result.toString();
     try {
-      excelExport.appendContent("Target point: "
+      excelExport.appendContent("---------------------------\n"
+       + "Target point: "
        + inputPoints.toString(), file);
       excelExport.appendContent("Sequential:" + resultInString, file);
     } catch(Exception e) {
@@ -153,8 +154,15 @@ class Main {
 
     //find closest point in kd tree
     long searchTimeStart = System.nanoTime();
-    //kdTreeInt.find(inputPoints);
+    result = kdTreeInt.find(inputPoints);
     ProcessTimeRecorder.KDTreeSearchTime += System.nanoTime() - searchTimeStart;
+    resultInString.toString();
+    try {
+      excelExport.appendContent("KDTree:" + resultInString, file);
+    } catch(Exception e) {
+      System.out.println("Data export error");
+    }
+    
     //find closest point in kd tree - advanced search mode
 
     //Export data to Excel (Do not override)

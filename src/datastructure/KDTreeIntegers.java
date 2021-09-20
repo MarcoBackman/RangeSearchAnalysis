@@ -10,7 +10,6 @@ import java.util.Comparator;
 
 public class KDTreeIntegers {
   IntegerTreeNode root;
-  boolean rootTriggered;
   int deepestDepth = 0;
   ArrayList<ArrayList<Integer>> entireMatrix;
 
@@ -21,10 +20,23 @@ public class KDTreeIntegers {
 
   //constructs the tree
   public void buildKDTree() {
-    System.out.println("Construction start");
     insert(0, this.entireMatrix, null);
     System.out.println("Done, deepest depth is: "
      + deepestDepth + " for array size: " + entireMatrix.size());
+  }
+
+  //sort by the dimension axis of the ArrayList
+  public class AxisSort implements Comparator<ArrayList<Integer>> 
+  {
+    int axis;
+    AxisSort(int axis) {
+      this.axis = axis;
+    }
+
+    @Override
+    public int compare(ArrayList<Integer> o1, ArrayList<Integer> o2) {
+        return o2.get(axis).compareTo(o1.get(axis));
+    }
   }
 
   //Must know the construction time - measuring required
@@ -45,11 +57,7 @@ public class KDTreeIntegers {
     //initial case - root
     if (parentNode == null && depth == 0) {
       parentNode = new IntegerTreeNode();
-      if (!rootTriggered) {
-        System.out.println("Setting root");
-        root = parentNode;
-        rootTriggered = true;
-      }
+      root = parentNode;
     }
 
     // Select axis based on depth so that axis cycles through all valid values
@@ -62,8 +70,10 @@ public class KDTreeIntegers {
     AxisSort comparator = new AxisSort(axis);
     particalMatrix.sort(comparator);
     int median = particalMatrix.size() / 2;
+
+    //set parent value and omit from the list
     ArrayList<Integer> pointSegment
-     = particalMatrix.get(median); //get median
+     = particalMatrix.remove(median); //get median
     parentNode.setPoints(pointSegment);
 
     //spliting matrix into two matrices !!!!! runs n times
@@ -96,20 +106,6 @@ public class KDTreeIntegers {
     }
   }
 
-  //sort by the dimension axis of the ArrayList
-  public class AxisSort implements Comparator<ArrayList<Integer>> 
-  {
-    int axis;
-    AxisSort(int axis) {
-      this.axis = axis;
-    }
-
-    @Override
-    public int compare(ArrayList<Integer> o1, ArrayList<Integer> o2) {
-        return o2.get(axis).compareTo(o1.get(axis));
-    }
-  }
-
   public DataCarrier find(ArrayList<Integer> points) {
     //start from the root
     IntegerTreeNode traverse = root;
@@ -118,12 +114,8 @@ public class KDTreeIntegers {
       int axis = traverse.getAxis();
       Integer valueToCompare = traverse.points.get(axis);
       if (points.get(axis) < valueToCompare) {
-        System.out.println("Going left, Given point:"
-         + points.get(axis) + " found point: " + valueToCompare);
          traverse = traverse.leftChild;
       } else {
-        System.out.println("Going right, Given point:"
-         + points.get(axis) + " found point: " + valueToCompare);
          traverse = traverse.rightChild;
       }
     }
