@@ -82,9 +82,10 @@ class Main {
          numOfPoints * POINT_MULTIPLIER, inputPoints, numOfPoints);
       }
 
-      //form output string data
+      //form output string data <- consider refactoring this.
       StringBuilder sb = new StringBuilder();
-      String data1 = "Number of points " + numOfPoints + "\n";
+      String data1 = "---------------------------\n" 
+       + "Number of points " + numOfPoints + "\n";
       String data2 = "\nSequential\n";
       String data3 = "Construction time(ns): "
        + ProcessTimeRecorder.sequentialConstructionTime + "\n";
@@ -117,8 +118,8 @@ class Main {
   public void runOneCase(int dimension,
                           int from,
                           int to,
-                          int points,
-                          ArrayList<Integer> inputPoints,
+                          int points, //<- naming confusion with ArrayList points from other classes
+                          ArrayList<Integer> inputPoints, //<- rename this as well - confusion with points
                           int fileIndexName) {
     //generate point -> export to data file
     generatePoints(dimension, from, to, points);
@@ -145,13 +146,15 @@ class Main {
     ArrayList<ArrayList<Integer>> entireMatrix
       = coordinateReader.getEntireMatrix();
     KDTreeIntegers kdTreeInt = new KDTreeIntegers(entireMatrix);
-    long searchTimeStart = System.nanoTime();
+    long constructionTimeStart = System.nanoTime();
     kdTreeInt.buildKDTree();
-    ProcessTimeRecorder.KDTreeConstructionTime += System.nanoTime() - searchTimeStart;
+    ProcessTimeRecorder.KDTreeConstructionTime += System.nanoTime() - constructionTimeStart;
 
 
     //find closest point in kd tree
-
+    long searchTimeStart = System.nanoTime();
+    //kdTreeInt.find(inputPoints);
+    ProcessTimeRecorder.KDTreeSearchTime += System.nanoTime() - searchTimeStart;
     //find closest point in kd tree - advanced search mode
 
     //Export data to Excel (Do not override)

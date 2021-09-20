@@ -10,6 +10,7 @@ import java.util.Comparator;
 
 public class KDTreeIntegers {
   IntegerTreeNode root;
+  boolean rootTriggered;
   int deepestDepth = 0;
   ArrayList<ArrayList<Integer>> entireMatrix;
 
@@ -44,12 +45,17 @@ public class KDTreeIntegers {
     //initial case - root
     if (parentNode == null && depth == 0) {
       parentNode = new IntegerTreeNode();
-      root = parentNode;
+      if (!rootTriggered) {
+        System.out.println("Setting root");
+        root = parentNode;
+        rootTriggered = true;
+      }
     }
 
     // Select axis based on depth so that axis cycles through all valid values
     int dimension = particalMatrix.get(0).size();
     int axis = depth % dimension; //axis
+    parentNode.setAxis(axis);
 
     //Sort point list and choose median as pivot element
     //  !!!!! must take account of the sorting time
@@ -73,17 +79,21 @@ public class KDTreeIntegers {
       }
     }
 
-    //make left child and connect recursively
-    IntegerTreeNode leftChild = new IntegerTreeNode();
-    leftChild.setDepth(depth + 1);
-    parentNode.setLeftChild(leftChild);
-    insert(depth + 1, leftList, leftChild);
+    if (leftList.size() != 0) {
+      //make left child and connect recursively
+      IntegerTreeNode leftChild = new IntegerTreeNode();
+      leftChild.setDepth(depth + 1);
+      parentNode.setLeftChild(leftChild);
+      insert(depth + 1, leftList, leftChild);
+    }
 
-    //make right child and connect recursively
-    IntegerTreeNode rightChild = new IntegerTreeNode();
-    rightChild.setDepth(depth + 1);
-    parentNode.setRightChild(rightChild);
-    insert(depth + 1, leftList, rightChild);
+    if (rightList.size() != 0) {
+      //make right child and connect recursively
+      IntegerTreeNode rightChild = new IntegerTreeNode();
+      rightChild.setDepth(depth + 1);
+      parentNode.setRightChild(rightChild);
+      insert(depth + 1, rightList, rightChild);
+    }
   }
 
   //sort by the dimension axis of the ArrayList
@@ -100,9 +110,37 @@ public class KDTreeIntegers {
     }
   }
 
-  public DataCarrier find(ArrayList points) {
+  public DataCarrier find(ArrayList<Integer> points) {
+    //start from the root
+    IntegerTreeNode traverse = root;
+    while (traverse.leftChild != null || traverse.rightChild != null) {
+      //compare value by axis
+      int axis = traverse.getAxis();
+      Integer valueToCompare = traverse.points.get(axis);
+      if (points.get(axis) < valueToCompare) {
+        System.out.println("Going left, Given point:"
+         + points.get(axis) + " found point: " + valueToCompare);
+         traverse = traverse.leftChild;
+      } else {
+        System.out.println("Going right, Given point:"
+         + points.get(axis) + " found point: " + valueToCompare);
+         traverse = traverse.rightChild;
+      }
+    }
+    double closestDistance = calculateDistance(points, traverse.getPoints());
+    DataCarrier carrier = new DataCarrier(traverse, closestDistance);
+    return carrier;
+  }
 
-    return null;
+  private double calculateDistance(ArrayList<Integer> given,
+                                   ArrayList<Integer> target) {
+    Integer total = 0;
+    for (int i = 0; i < given.size(); i++) {
+      Integer givenElement = given.get(i);
+      Integer targetElement = target.get(i);
+      total += givenElement * givenElement + targetElement * targetElement;
+    }
+    return Math.sqrt(total);
   }
 
   public class IntegerTreeNode {
