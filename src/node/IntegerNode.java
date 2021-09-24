@@ -1,12 +1,12 @@
-package src.datastructure;
+package src.node;
 
 import java.util.ArrayList;
 
-class IntegerNode {
+public class IntegerNode {
     IntegerNode next = null;
     ArrayList<Integer> list = new ArrayList<Integer>();
 
-    IntegerNode(ArrayList<Integer> list) {
+    public IntegerNode(ArrayList<Integer> list) {
         this.list = list;
     }
 
