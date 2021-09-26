@@ -1,5 +1,6 @@
 package src.datastructure;
 
+import src.node.IntegerNode;
 import src.datastructure.KDTreeIntegers.IntegerTreeNode;
 
 public class DataCarrier {

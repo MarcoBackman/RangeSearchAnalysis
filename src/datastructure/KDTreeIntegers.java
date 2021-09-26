@@ -3,6 +3,8 @@ package src.datastructure;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import src.utils.ProcessTimeRecorder;
+
 /*
  * @author: Markco Backman
  * @email : roni2006@hanmail.net
@@ -43,6 +45,8 @@ public class KDTreeIntegers {
   public void insert(int depth,
                      ArrayList<ArrayList<Integer>> particalMatrix,
                      IntegerTreeNode parentNode) {
+    Runtime runtime = Runtime.getRuntime();
+    long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
     //termination condition
     if (particalMatrix == null) {
       return;
@@ -89,6 +93,8 @@ public class KDTreeIntegers {
       }
     }
 
+    long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+    ProcessTimeRecorder.KDTreeSize += usedMemoryAfter-usedMemoryBefore;
     if (leftList.size() != 0) {
       //make left child and connect recursively
       IntegerTreeNode leftChild = new IntegerTreeNode();

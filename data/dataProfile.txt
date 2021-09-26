@@ -1,119 +1,119 @@
-Target point: [5, 5]
-Sequential:Closest node: [3, 4] in distance 1.7320508075688772
+---------------------------
+Target point: [5, 5, 5]
+Sequential:Closest node: [4, 6, 7] in distance 2.3268462696046543
 
-KDTree:Closest node: [3, 4] in distance 1.7320508075688772
+KDTree:Closest node: [4, 6, 7] in distance 2.3268462696046543
 
 ---------------------------
 Number of points 100
 
 Sequential
-Construction time(ns): 72600
-Search time(ns): 72600
+Construction time(ns): 134285
+Search time(ns): 46749
 
 KDTree
-Construction time(ns): 3779300
-Search time(ns): 21000
+Construction time(ns): 1262882
+Search time(ns): 12702
 
+---------------------------
+Target point: [5, 5, 5]
+Sequential:Closest node: [29, 9, 4] in distance 2.7063915681838724
 
-Target point: [5, 5]
-Sequential:Closest node: [5, 4] in distance 1.0
-
-KDTree:Closest node: [5, 4] in distance 1.0
+KDTree:Closest node: [29, 9, 4] in distance 2.7063915681838724
 
 ---------------------------
 Number of points 200
 
 Sequential
-Construction time(ns): 160300
-Search time(ns): 160300
+Construction time(ns): 239773
+Search time(ns): 65059
 
 KDTree
-Construction time(ns): 5091100
-Search time(ns): 27900
+Construction time(ns): 2545068
+Search time(ns): 9104
 
+---------------------------
+Target point: [5, 5, 5]
+Sequential:Closest node: [335, 15, 6] in distance 4.66223566042384
 
-Target point: [5, 5]
-Sequential:Closest node: [3, 7] in distance 2.449489742783178
-
-KDTree:Closest node: [3, 7] in distance 2.449489742783178
+KDTree:Closest node: [335, 15, 6] in distance 4.66223566042384
 
 ---------------------------
 Number of points 400
 
 Sequential
-Construction time(ns): 418300
-Search time(ns): 418300
+Construction time(ns): 480125
+Search time(ns): 104761
 
 KDTree
-Construction time(ns): 4538900
-Search time(ns): 16300
+Construction time(ns): 6472364
+Search time(ns): 12221
 
+---------------------------
+Target point: [5, 5, 5]
+Sequential:Closest node: [71, 27, 7] in distance 5.239473141368047
 
-Target point: [5, 5]
-Sequential:Closest node: [19, 7] in distance 4.242640687119285
-
-KDTree:Closest node: [19, 7] in distance 4.242640687119285
+KDTree:Closest node: [71, 27, 7] in distance 5.239473141368047
 
 ---------------------------
 Number of points 800
 
 Sequential
-Construction time(ns): 669600
-Search time(ns): 669600
+Construction time(ns): 910560
+Search time(ns): 281506
 
 KDTree
-Construction time(ns): 42408800
-Search time(ns): 19900
+Construction time(ns): 14214608
+Search time(ns): 14830
 
+---------------------------
+Target point: [5, 5, 5]
+Sequential:Closest node: [1063, 9, 1] in distance 6.983690945076813
 
-Target point: [5, 5]
-Sequential:Closest node: [52, 3] in distance 7.14142842854285
-
-KDTree:Closest node: [52, 3] in distance 7.14142842854285
+KDTree:Closest node: [1063, 9, 1] in distance 6.983690945076813
 
 ---------------------------
 Number of points 1600
 
 Sequential
-Construction time(ns): 723100
-Search time(ns): 723100
+Construction time(ns): 1723079
+Search time(ns): 537726
 
 KDTree
-Construction time(ns): 34562100
-Search time(ns): 352200
+Construction time(ns): 36119433
+Search time(ns): 24221
 
+---------------------------
+Target point: [5, 5, 5]
+Sequential:Closest node: [1572, 25, 4] in distance 6.734305734303527
 
-Target point: [5, 5]
-Sequential:Closest node: [84, 4] in distance 8.94427190999916
-
-KDTree:Closest node: [84, 4] in distance 8.94427190999916
+KDTree:Closest node: [1572, 25, 4] in distance 6.734305734303527
 
 ---------------------------
 Number of points 3200
 
 Sequential
-Construction time(ns): 6900100
-Search time(ns): 6900100
+Construction time(ns): 3381486
+Search time(ns): 1063040
 
 KDTree
-Construction time(ns): 68698200
-Search time(ns): 17100
+Construction time(ns): 72048579
+Search time(ns): 11020
 
+---------------------------
+Target point: [5, 5, 5]
+Sequential:Closest node: [6330, 74, 4] in distance 10.309707828339219
 
-Target point: [5, 5]
-Sequential:Closest node: [106, 8] in distance 10.488088481701515
-
-KDTree:Closest node: [106, 8] in distance 10.488088481701515
+KDTree:Closest node: [6330, 74, 4] in distance 10.309707828339219
 
 ---------------------------
 Number of points 6400
 
 Sequential
-Construction time(ns): 1483600
-Search time(ns): 1483600
+Construction time(ns): 6150585
+Search time(ns): 2089660
 
 KDTree
-Construction time(ns): 195127700
-Search time(ns): 22700
-
+Construction time(ns): 184920261
+Search time(ns): 30805
 

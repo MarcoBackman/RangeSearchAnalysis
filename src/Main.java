@@ -16,8 +16,6 @@ import src.utils.ProcessTimeRecorder;
  * @author: Marco Backman
  * @email : roni2006@hanmail.net
  */
-
-
  
 class Main {
   //Range over 4 produces integer representation overflow
@@ -90,19 +88,26 @@ class Main {
       String data3 = "Construction time(ns): "
        + ProcessTimeRecorder.sequentialConstructionTime + "\n";
       String data4 = "Search time(ns): "
-       + ProcessTimeRecorder.sequentialConstructionTime + "\n";
+       + ProcessTimeRecorder.sequentialSearchTime + "\n";
+      String data4_1 = "Space complexity: "
+       + ProcessTimeRecorder.sequentialSize + "\n\n";
       String data5 = "\nKDTree\n";
       String data6 = "Construction time(ns): "
        + ProcessTimeRecorder.KDTreeConstructionTime + "\n";
       String data7 = "Search time(ns): "
-       + ProcessTimeRecorder.KDTreeSearchTime + "\n\n";
+       + ProcessTimeRecorder.KDTreeSearchTime + "\n";
+       String data7_1 = "Space complexity: "
+       + ProcessTimeRecorder.KDTreeSize + "\n\n";
+       
       sb.append(data1);
       sb.append(data2);
       sb.append(data3);
       sb.append(data4);
+      //sb.append(data4_1);
       sb.append(data5);
       sb.append(data6);
       sb.append(data7);
+      //sb.append(data7_1);
 
       //append measured time to Excel
       try {
@@ -150,7 +155,6 @@ class Main {
     long constructionTimeStart = System.nanoTime();
     kdTreeInt.buildKDTree();
     ProcessTimeRecorder.KDTreeConstructionTime += System.nanoTime() - constructionTimeStart;
-
 
     //find closest point in kd tree
     long searchTimeStart = System.nanoTime();

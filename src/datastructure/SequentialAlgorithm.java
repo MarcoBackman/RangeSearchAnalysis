@@ -2,6 +2,7 @@ package src.datastructure;
 
 import java.util.ArrayList;
 
+import src.node.IntegerNode;
 import src.utils.ProcessTimeRecorder;
 
 /*
@@ -19,7 +20,9 @@ public class SequentialAlgorithm {
   }
 
   public void insert(ArrayList<Integer> list) {
+    Runtime runtime = Runtime.getRuntime();
     long insertTimeStart = System.nanoTime();
+    long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
     IntegerNode newNode = new IntegerNode(list);
     if (size == 0) {
       start = newNode;
@@ -35,6 +38,8 @@ public class SequentialAlgorithm {
       ++size;
     }
     ProcessTimeRecorder.sequentialConstructionTime += System.nanoTime() - insertTimeStart;
+    long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
+    ProcessTimeRecorder.sequentialSize += usedMemoryAfter - usedMemoryBefore;
   }
 
   public void iterateAndPrint() {

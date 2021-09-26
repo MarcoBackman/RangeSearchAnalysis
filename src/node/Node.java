@@ -1,79 +1,81 @@
-/*
 package src.node;
 
 import java.util.ArrayList;
-//T for the dimenstion or type
-public class Node<T extends Integer, V extends ArrayList> {
-  //primary content
-  private T type;
-  private ArrayList<V> values;
-  //Node connection for tree - can be formed into a linked list if every node has one child
-  private Node<T, V> parent;
-  private ArrayList<Node<T, V>> children;
 
-  //constructors
-  public Node(ArrayList<V> values) {
-    System.out.println(this.type);
-    this.parent = null;
-    this.values = (ArrayList<V>)values;
+/*
+ * @author: Markco Backman
+ * @email : roni2006@hanmail.net
+ * Not fully implemented yet
+ */
+
+//A current node's generic type and children's generic type may mismatch
+public class Node<E> {
+  private E axis; //Specific type - this represents the axis
+  private ArrayList<Object> originalData; //Original value - list of types may vary by element
+  private boolean isRoot = false;
+  private Node<Object> left = null; //Unknown generic type
+  private Node<Object> right = null;//Unknown generic type
+  private int degree;
+
+  //list of types may vary by elements
+  @SuppressWarnings("unchecked")
+  Node(ArrayList<Object> originalData, int axisIndex) {
+    this.originalData = originalData;
+    originalData.get(axisIndex);
+    this.axis = (E)originalData.get(axisIndex);
   }
 
-  Node(T type, ArrayList<V> values, Node<T, V> parent) {
-    this.parent = parent;
-    this.type = type;
-    this.values = values;
+  public void setRoot() {
+    this.isRoot = true;
   }
 
-  //getter
-
-  public T getType() {
-    return this.type;
+  //Unknown generic type
+  public void setLeftNode(Node<Object> leftNode) {
+    this.left = leftNode;
   }
 
-  public ArrayList<V> getValues() {
-    return this.values;
+  //Unknown generic type
+  public void setRightNode(Node<Object> rightNode) {
+    this.right = rightNode;
   }
 
-  public Node<T, V> getParent() {
-    return parent;
+  public boolean isRoot() {
+    return isRoot;
   }
 
-  //get children who has the same value
-  public ArrayList<Node<T, V>> getChild(V value) {
-    return children;
+  public boolean isLeaf() {
+    if (left == null && right == null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  public Node<T, V> getFirstChild() {
-    if (children.isEmpty())
-      return null;
-    return children.get(0);
+  public void setDegree(int degree) {
+    this.degree = degree;
   }
 
-  public ArrayList<Node<T, V>> getChildren() {
-    return children;
+  //list of types may vary by elements
+  public ArrayList<Object> getOriginalData() {
+    return originalData;
   }
 
-  //setter
-
-  public void setType(T type) {
-    this.type = type;
+   //Unknown generic type
+  public Node<Object> getLeftNode() {
+    return left;
   }
 
-  public void setValues(ArrayList<V> values) {
-    this.values = values;
-  }
-  
-  public void setParent(Node<T, V> parent) {
-    this.parent = parent;
+   //Unknown generic type
+  public Node<Object> getRightNode() {
+    return right;
   }
 
-  public void setChildren(ArrayList<Node<T, V>> children) {
-    this.children = children;
+  public int getDegree() {
+    return degree;
   }
 
-  public void setChild(Node<T, V> child) {
-    this.children.add(child);
+  //used for main comparison
+  public E getAxis() {
+    return this.axis;
   }
 }
-
-*/
