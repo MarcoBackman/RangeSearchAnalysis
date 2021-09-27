@@ -115,13 +115,17 @@ public class KDTreeIntegers {
   public DataCarrier find(ArrayList<Integer> points) {
     //start from the root
     IntegerTreeNode traverse = root;
-    while (traverse.leftChild != null || traverse.rightChild != null) {
+    while (traverse.hasChild()) {
       //compare value by axis
       int axis = traverse.getAxis();
       Integer valueToCompare = traverse.points.get(axis);
       if (points.get(axis) < valueToCompare) {
-         traverse = traverse.leftChild;
+        if (traverse.leftChild == null)
+          break;
+        traverse = traverse.leftChild;
       } else {
+        if (traverse.rightChild == null)
+          break;
          traverse = traverse.rightChild;
       }
     }
@@ -142,6 +146,7 @@ public class KDTreeIntegers {
   }
 
   public class IntegerTreeNode {
+    IntegerTreeNode parent;
     ArrayList<Integer> points;
     IntegerTreeNode leftChild;
     IntegerTreeNode rightChild;
@@ -162,6 +167,13 @@ public class KDTreeIntegers {
 
     public int getDepth() {
       return this.depth;
+    }
+
+    public boolean hasChild() {
+      if (leftChild == null && rightChild == null) {
+        return false;
+      }
+      return true;
     }
 
     public void setAxis(int axisIndex) {
