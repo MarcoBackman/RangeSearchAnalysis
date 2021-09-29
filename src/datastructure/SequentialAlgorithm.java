@@ -19,6 +19,12 @@ public class SequentialAlgorithm {
     return size;
   }
 
+  public void buildList (ArrayList<ArrayList<Integer>> matrix) {
+    for (ArrayList<Integer> list : matrix) {
+      insert(list);
+    }
+  }
+
   public void insert(ArrayList<Integer> list) {
     Runtime runtime = Runtime.getRuntime();
     long insertTimeStart = System.nanoTime();
@@ -50,18 +56,45 @@ public class SequentialAlgorithm {
     }
   }
 
-  public DataCarrier findCloestDistance(ArrayList<Integer> targetPoint) {
+  public boolean compareTwoPoints(ArrayList<Integer> a, ArrayList<Integer> b) {
+    for (int i = 0; i < a.size(); i++) {
+      if (!a.get(i).equals(b.get(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public IntegerNode findMatch(ArrayList<Integer> targetPoints) {
+    long searchTimeStart = System.nanoTime();
+    IntegerNode resultNode = null;
+    IntegerNode walk = start;
+    //dimension mismatch!
+    if (targetPoints.size() != walk.getPoints().size()) {
+      System.out.println("Dimension error!");
+      return null;
+    }
+
+    while (walk != null) {
+      //compares all points
+      if (compareTwoPoints(targetPoints, walk.getPoints())) {
+        resultNode = walk;
+        break;
+      }
+      walk = walk.getNext();
+    }
+    ProcessTimeRecorder.seqExactSearchTime += System.nanoTime() - searchTimeStart;
+    return resultNode;
+  }
+
+  public DataCarrier findCloestDistance(ArrayList<Integer> targetPoints) {
     long searchTimeStart = System.nanoTime();
     double closestDistance = -1;
     IntegerNode resultNode = null;
     IntegerNode walk = start;
     while (walk != null) {
       double retreivedDistance = -1;
-      try {
-        retreivedDistance = walk.calculateDistance(targetPoint);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      retreivedDistance = calculateDistance(walk.getPoints(), targetPoints);
       if (closestDistance == -1) { //initial swap
         closestDistance = retreivedDistance;
         resultNode = walk;
@@ -76,5 +109,67 @@ public class SequentialAlgorithm {
     DataCarrier carrier
       = new DataCarrier(resultNode, closestDistance);
     return carrier;
+  }
+
+  public double calculateDistance (ArrayList<Integer> desiredPoint,
+                                   ArrayList<Integer> comparingPoint) {
+    double absoluteDistance = 0;
+    if(!checkLengthMatch(desiredPoint, comparingPoint)) {
+      //length mismatch error
+    }
+    for (int i = 0; i < desiredPoint.size(); i++) {
+      Integer tempListValue = desiredPoint.get(i);
+      Integer tempPointValue = comparingPoint.get(i);
+      try {
+          int subtractedValue = tempListValue - tempPointValue;
+          absoluteDistance += subtractedValue * subtractedValue;
+          //will return negative value if overflowed
+          if (absoluteDistance < 0) {
+            throw new Exception();
+          }
+      } catch (Exception e) {
+        System.out.println("Value overflow occoured: " + e);
+      }
+    }
+    absoluteDistance = Math.sqrt(absoluteDistance);
+    return absoluteDistance;
+  }
+
+  private boolean checkLengthMatch(ArrayList<Integer> first_points,
+                                   ArrayList<Integer> second_points) {
+    if (first_points.size() != second_points.size()) {
+    return false;
+    }
+    return true;
+  }
+
+  public void print() {
+    IntegerNode walk = start;
+    while (walk != null) {
+      //compares all points
+      System.out.print(walk.getPoints().toString() + ", ");
+      walk = walk.getNext();
+    }
+    System.out.println("");
+  }
+
+  public void print(ArrayList<Integer> points) {
+    IntegerNode walk = start;
+    //dimension mismatch!
+    if (points.size() != walk.getPoints().size()) {
+      System.out.println("Dimension error!");
+      return;
+    }
+
+    while (walk != null) {
+      //compares all points
+      if (compareTwoPoints(points, walk.getPoints())) {
+        System.out.print("---" + walk.getPoints().toString() + "---, ");
+      } else {
+        System.out.print(walk.getPoints().toString() + ", ");
+      }
+      walk = walk.getNext();
+    }
+    System.out.println("");
   }
 }

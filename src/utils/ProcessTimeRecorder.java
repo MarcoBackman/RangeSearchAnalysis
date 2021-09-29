@@ -3,6 +3,7 @@ package src.utils;
 public class ProcessTimeRecorder {
   //in milliseconds
   public static long sequentialConstructionTime = 0;
+  public static long seqExactSearchTime = 0;
   public static long sequentialSearchTime = 0;
   public static long KDTreeConstructionTime = 0;
   public static long KDTreeSearchTime = 0;
