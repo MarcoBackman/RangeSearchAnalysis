@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Deque;
 
-import src.node.IntegerNode;
 import src.utils.ProcessTimeRecorder;
 
 /*
@@ -17,16 +16,18 @@ public class KDTreeIntegers {
   IntegerTreeNode root;
   int deepestDepth = 0;
   ArrayList<ArrayList<Integer>> entireMatrix;
+  public DataCarrier KNN_result;
+  IntegerTreeNode shortestNode;
+  double shortestDistance;
 
   //initializes, but doesn't construct the tree
   public KDTreeIntegers(ArrayList<ArrayList<Integer>> entireMatrix) {
     this.entireMatrix = new ArrayList<ArrayList<Integer>>(entireMatrix);
-    System.out.println("Array size: " + this.entireMatrix.size());
   }
 
   //constructs the tree
   public void buildKDTree() {
-    insert(0, this.entireMatrix, null);
+    insert(0, this.entireMatrix, null, null);
   }
 
   //sort by the dimension axis of the ArrayList
@@ -46,7 +47,8 @@ public class KDTreeIntegers {
   //Must know the construction time - measuring required
   public void insert(int depth,
                      ArrayList<ArrayList<Integer>> particalMatrix,
-                     IntegerTreeNode currentNode) {
+                     IntegerTreeNode currentNode,
+                     IntegerTreeNode parentNode) {
 
     Runtime runtime = Runtime.getRuntime();
     long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -77,6 +79,7 @@ public class KDTreeIntegers {
 
     median = particalMatrix.size() / 2;
 
+    currentNode.setParentNode(parentNode);
     currentNode.setAxis(axis);
     currentNode.setDepth(depth);
     currentNode.setPoints(pointSegment);
@@ -93,19 +96,19 @@ public class KDTreeIntegers {
     if (leftList.size() != 0) {
       IntegerTreeNode leftChild = new IntegerTreeNode();
       currentNode.setLeftChild(leftChild);
-      insert(depth + 1, leftList, leftChild);
+      insert(depth + 1, leftList, leftChild, currentNode);
     }
+
     if (rightList.size() != 0) {
       IntegerTreeNode rightChild = new IntegerTreeNode();
       currentNode.setRightChild(rightChild);
-      insert(depth + 1, rightList, rightChild);
+      insert(depth + 1, rightList, rightChild, currentNode);
     }
-
     long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
     ProcessTimeRecorder.KDTreeSize += usedMemoryAfter-usedMemoryBefore;
   }
 
-  public DataCarrier find(ArrayList<Integer> points) {
+  public DataCarrier findKDTreeNormal(ArrayList<Integer> points) {
     //start from the root
     IntegerTreeNode traverse = root;
     IntegerTreeNode closestNode = root;
@@ -129,8 +132,61 @@ public class KDTreeIntegers {
          traverse = traverse.rightChild;
       }
     }
+    shortestNode = closestNode;
+    shortestDistance = closestDistance;
     DataCarrier carrier = new DataCarrier(closestNode, closestDistance);
+    KNN_result = carrier;
     return carrier;
+  }
+
+
+  //shortest node with current walking node
+  //parameters must be the value from kdtree search
+  //Must run this after running KD tree algorithm
+  public void findKNNAlgorithm(ArrayList<Integer> targetPoints,
+                               IntegerTreeNode walkingNode) {
+    //check current node
+    if (!walkingNode.isVisited()) {
+      double currentDistance
+      = calculateDistance(walkingNode.getPoints(), targetPoints);
+      if(currentDistance < this.shortestDistance) {
+        DataCarrier newDataCarrier = new DataCarrier(walkingNode, currentDistance);
+        KNN_result = newDataCarrier;
+        this.shortestNode = walkingNode;
+        this.shortestDistance = currentDistance;
+      }
+    }
+   
+    //visitation set
+    int comparingAxis = walkingNode.getAxis();
+    walkingNode.setVisited();
+
+    //left child check
+    if (walkingNode.leftChild != null) {
+      if (!walkingNode.leftChild.isVisited()) {
+        findKNNAlgorithm(targetPoints, walkingNode.leftChild);
+      }
+    }
+
+    //right child check
+    if (walkingNode.rightChild != null) {
+      if (!walkingNode.rightChild.isVisited()) {
+        findKNNAlgorithm(targetPoints, walkingNode.rightChild);
+      }
+    }
+    
+    //root check before going into the parent
+    if (walkingNode.parent != null) {
+      Integer currentPointByAxis = walkingNode.getPoints().get(comparingAxis);
+      Integer parentPointByAxis = walkingNode.parent.getPoints().get(comparingAxis);
+      Integer targetPointByAxis = targetPoints.get(comparingAxis);
+      double shortest_parent = getRSqured(currentPointByAxis, parentPointByAxis);
+      double shortest_target = getRSqured(currentPointByAxis, targetPointByAxis);
+      //check distance by axis
+      if (shortest_target >= shortest_parent) {
+        findKNNAlgorithm(targetPoints, walkingNode.parent);
+      }
+    }
   }
 
   private double calculateDistance(ArrayList<Integer> given,
@@ -142,6 +198,13 @@ public class KDTreeIntegers {
       total += (targetElement - givenElement) * (targetElement - givenElement);
     }
     return Math.sqrt(total);
+  }
+
+  private double getRSqured(Integer a, Integer b) {
+    int diff = a - b;
+    double squared = diff * diff;
+    double squareRoot = Math.sqrt(squared);
+    return squareRoot;
   }
 
   public void printTree() {
@@ -192,23 +255,26 @@ public class KDTreeIntegers {
   private void printBFSTree(Deque<IntegerTreeNode> list) {
     StringBuilder sb = new StringBuilder();
     int currentDepth = 0;
-    int count = 0;
     while(!list.isEmpty()) {
       IntegerTreeNode tempNode = list.removeFirst();
       if (currentDepth != tempNode.getDepth()) {
         sb.append("\n");
         currentDepth = tempNode.getDepth();
-        count = 0;
       }
+      if (!tempNode.hasChild()) {
+        sb.append("parent:");
+        sb.append(tempNode.parent.getPoints().toString());
+        sb.append("/");
+      } 
       sb.append(tempNode.getPoints().toString());
       sb.append(" - ");
-      count++;
     }
     System.out.println(sb.toString() + "\n");
   }
 
   public class IntegerTreeNode {
     IntegerTreeNode parent;
+    IntegerTreeNode current;
     ArrayList<Integer> points;
     IntegerTreeNode leftChild;
     IntegerTreeNode rightChild;
@@ -222,6 +288,10 @@ public class KDTreeIntegers {
 
     public ArrayList<Integer> getPoints() {
       return this.points;
+    }
+
+    public IntegerTreeNode getParentNode() {
+      return this.parent;
     }
 
     public void setDepth(int depth) {
@@ -262,5 +332,18 @@ public class KDTreeIntegers {
     public IntegerTreeNode getRightChild() {
       return rightChild;
     }
+
+    public void setParentNode(IntegerTreeNode parent) {
+      this.parent = parent;
+    }
+
+    public void setVisited() {
+      this.visited = true;
+    }
+
+    public boolean isVisited() {
+      return this.visited;
+    }
+
   }
 }

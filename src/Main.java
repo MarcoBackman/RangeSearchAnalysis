@@ -7,7 +7,6 @@ import java.util.Scanner;
 import src.datastructure.DataCarrier;
 import src.datastructure.KDTreeIntegers;
 import src.datastructure.SequentialAlgorithm;
-import src.node.IntegerNode;
 import src.utils.CoordinateReader;
 import src.utils.ExcelExport;
 import src.utils.ProcessTimeRecorder;
@@ -19,7 +18,7 @@ import src.utils.ProcessTimeRecorder;
  
 class Main {
   //Range over 4 produces integer representation overflow
-  final String INPUT_FILE_NAME = "./data/SMALL_DATA_CASE2_10";
+  final String INPUT_FILE_NAME = "./data/SMALL_DATA_CASE5_40";
   final String EXCEL_FILE_NAME = "./data/dataProfile.txt";
   File EXCEL_FILE = new File(EXCEL_FILE_NAME);
   ExcelExport excelExport = new ExcelExport();
@@ -67,21 +66,27 @@ class Main {
     //nearest distance
     DataCarrier result = sequentialAlgorithm.findCloestDistance(targetPoints);
     String seqResultInString = result.toString();
-    System.out.println(seqResultInString.toString());
+    System.out.println("Sequential search: " + seqResultInString.toString());
 
     //construct kd tree
     KDTreeIntegers kdTreeInt = new KDTreeIntegers(matrix);
     long constructionTimeStart = System.nanoTime();
     kdTreeInt.buildKDTree();
     ProcessTimeRecorder.KDTreeConstructionTime += System.nanoTime() - constructionTimeStart;
-    kdTreeInt.printTree();
 
     //find point in kd tree
     long searchTimeStart = System.nanoTime();
-    DataCarrier kdResult = kdTreeInt.find(targetPoints);
+    DataCarrier kdResult = kdTreeInt.findKDTreeNormal(targetPoints);
     ProcessTimeRecorder.KDTreeSearchTime += System.nanoTime() - searchTimeStart;
-    System.out.println(kdResult.toString());
+    System.out.println("KDTree search: " + kdResult.toString());
 
+    //KNN algorithm
+    kdTreeInt.findKNNAlgorithm(targetPoints,
+                               kdResult.getTreeNode());
+
+    System.out.println("KDTree with KNN search: " + kdTreeInt.KNN_result.toString());
+
+    //kdTreeInt.printTree();
     //export data to Excel file
     try { //reset first
       excelExport.resetContnet(EXCEL_FILE);

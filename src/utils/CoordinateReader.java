@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-import src.datastructure.SequentialAlgorithm;
-
 /*
  * @author: Marco Backman
  * @email : roni2006@hanmail.net

@@ -1,9 +1,12 @@
 package src.datastructure;
 
-import src.node.IntegerNode;
+import java.util.ArrayList;
+
 import src.datastructure.KDTreeIntegers.IntegerTreeNode;
+import src.node.IntegerNode;
 
 public class DataCarrier {
+    IntegerTreeNode treeNode;
     IntegerNode resultNode;
     double distance;
     int depth; //depth is 0 on Sequential list
@@ -15,9 +18,10 @@ public class DataCarrier {
 
     public DataCarrier(IntegerTreeNode node, double distance) {
         //make tree node to node
-        IntegerNode newNode = new IntegerNode(node.points);
+        IntegerNode newIntegerNode = new IntegerNode(node.points);
         this.depth = node.getDepth();
-        this.resultNode = newNode;
+        this.treeNode = node;
+        this.resultNode = newIntegerNode;
         this.distance = distance;
     }
 
@@ -34,7 +38,7 @@ public class DataCarrier {
     }
 
     public String toString() {
-        return "Closest node: " + this.resultNode.toString() + " in distance " + this.distance + "\n";
+        return this.resultNode.toString() + " in distance " + this.distance + "\n";
     }
 
     public void setIntegerNode(IntegerNode resultNode) {
@@ -43,5 +47,17 @@ public class DataCarrier {
 
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    public IntegerTreeNode getTreeNode() {
+        return this.treeNode;
+    }
+
+    public ArrayList<Integer> getPoints() {
+        return this.resultNode.getPoints();
+    }
+
+    public IntegerTreeNode getParentNode() {
+        return this.treeNode.getParentNode();
     }
 }
