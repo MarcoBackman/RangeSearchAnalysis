@@ -66,7 +66,6 @@ public class SequentialAlgorithm {
   }
 
   public IntegerNode findMatch(ArrayList<Integer> targetPoints) {
-    long searchTimeStart = System.nanoTime();
     IntegerNode resultNode = null;
     IntegerNode walk = start;
     //dimension mismatch!
@@ -83,7 +82,6 @@ public class SequentialAlgorithm {
       }
       walk = walk.getNext();
     }
-    ProcessTimeRecorder.seqExactSearchTime += System.nanoTime() - searchTimeStart;
     return resultNode;
   }
 
