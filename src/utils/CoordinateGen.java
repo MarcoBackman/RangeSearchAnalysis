@@ -18,10 +18,10 @@ public class CoordinateGen {
   final int SMALL_TOTAL_CASE_TRIES = 5;
   final int SMALL_POINT_MULTIPLIER = 2;
 
-  final int BIG_LENGTH_MULTIPLIER = 2;
-  final int BIG_POINT_MULTIPLIER = 2;
+  final int BIG_LENGTH_MULTIPLIER = 4;
+  final int BIG_POINT_MULTIPLIER = 4;
   final int BIG_INITIAL_NUMBER_OF_POINTS = 10;
-  final int BIG_TOTAL_CASE_TRIES = 7;
+  final int BIG_TOTAL_CASE_TRIES = 8;
 
   boolean inOrder;
   boolean smallTestCase;
@@ -57,9 +57,9 @@ public class CoordinateGen {
       userInputPoints(sc);
     }
     Integer caseSize = Integer.parseInt(strArr[0]);
-    if (caseSize == 0) { //big test case
+    if (caseSize == 1) { //big test case
       generateSmallCases(dimension);
-    } else if (caseSize == 1) { //small test case
+    } else if (caseSize == 0) { //small test case
       generateHugeCases(dimension);
     } else {
       System.out.println("Wrong Input");
@@ -79,27 +79,7 @@ public class CoordinateGen {
 
   private void generateSmallCases(int dimension) {
     for (int caseNumber = 1; caseNumber <= SMALL_TOTAL_CASE_TRIES; caseNumber++) {
-      file = new File("./data/SMALL_DATA_CASE" + (caseNumber + 1)
-        + "_" + (10 * caseNumber) + ".txt");
-      try {
-        createFile(file);
-
-        fw = new FileWriter(file, StandardCharsets.UTF_8);
-        BufferedWriter writer = new BufferedWriter(fw);
-        writer.write(""); //empty file
-
-        for (int points = 0; points < 10 * caseNumber; points++) {
-          savePointsToFile(generatePoint(dimension, 1, 10 * caseNumber), writer);
-        }
-      } catch(Exception e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-  private void generateHugeCases(int dimension) {
-    for (int caseNumber = 1; caseNumber <= BIG_TOTAL_CASE_TRIES; caseNumber++) {
-      file = new File("./data/SMALL_DATA_CASE" + (caseNumber + 1)
+      file = new File("./data/SMALL_DATA_CASE" + (caseNumber * 10)
         + "_" + (10 * caseNumber));
       try {
         createFile(file);
@@ -108,13 +88,38 @@ public class CoordinateGen {
         writer.write(""); //empty file
         fw = new FileWriter(file, true);
         writer = new BufferedWriter(fw);
-        int multiplier = (int) Math.pow(2, caseNumber);
-        for (int points = 0; points <  multiplier * 10; points++) {
+
+        for (int points = 0; points < 10 * caseNumber; points++) {
           savePointsToFile(generatePoint(dimension, 1, 10 * caseNumber), writer);
         }
         writer.flush();
       } catch(Exception e) {
-        System.out.println(e);
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private void generateHugeCases(int dimension) {
+    for (int caseNumber = 1; caseNumber <= BIG_TOTAL_CASE_TRIES; caseNumber++) {
+      //more points
+      int multiplier = (int) Math.pow(2, caseNumber);
+
+      file = new File("./data/BIG_DATA_CASE" + (caseNumber * 10)
+        + "_" + (multiplier * 10));
+      try {
+        createFile(file);
+        fw = new FileWriter(file, StandardCharsets.UTF_8);
+        BufferedWriter writer = new BufferedWriter(fw);
+        writer.write(""); //empty file
+        fw = new FileWriter(file, true);
+        writer = new BufferedWriter(fw);
+
+        for (int points = 0; points <  multiplier * 10; points++) {
+          savePointsToFile(generatePoint(dimension, 1, caseNumber * 10), writer);
+        }
+        writer.flush();
+      } catch(Exception e) {
+        e.printStackTrace();
       }
     }
   }

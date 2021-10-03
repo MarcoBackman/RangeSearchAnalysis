@@ -49,6 +49,10 @@ public class CoordinateReader {
     return this.dimension;
   }
 
+  public int getMatrixLength() {
+    return entireMatrix.size();
+  }
+
   public ArrayList<ArrayList<Integer>> getEntireMatrix() {
     return this.entireMatrix;
   }

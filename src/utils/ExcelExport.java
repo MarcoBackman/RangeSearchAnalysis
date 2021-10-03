@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
  /*
  * @author: Marco Backman
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 public class ExcelExport {
   
-  final char COMMA = 47;
+  final char COMMA = 44;
 
   public void appendContent(String contents, File file) throws IOException { 
     FileWriter fw = new FileWriter(file, true); //true - append
@@ -110,11 +111,11 @@ public class ExcelExport {
     sb.append(COMMA);
     sb.append(dataSet.getMatrixLength());
     sb.append(COMMA);
-    sb.append(dataSet.getTargetPoints().toString().trim());
+    sb.append(toString(dataSet.getTargetPoints()));
     sb.append(COMMA);
 
     //sequential algorithm
-    sb.append(dataSet.getSeqResultPoints().toString().trim());
+    sb.append(toString(dataSet.getSeqResultPoints()));
     sb.append(COMMA);
     sb.append(dataSet.getSeqDistance());
     sb.append(COMMA);
@@ -123,7 +124,7 @@ public class ExcelExport {
     sb.append(dataSet.getSeqSearchTime());
     sb.append(COMMA);
     //kd-tree algorithm
-    sb.append(dataSet.getKdResultPoints()).toString().trim();
+    sb.append(toString(dataSet.getKdResultPoints()));
     sb.append(COMMA);
     sb.append(dataSet.getKdDistance());
     sb.append(COMMA);
@@ -132,7 +133,7 @@ public class ExcelExport {
     sb.append(dataSet.getKdSearchTime());
     sb.append(COMMA);
     //knn algorithm
-    sb.append(dataSet.getKnnResultPoints().toString().trim());
+    sb.append(toString(dataSet.getKnnResultPoints()));
     sb.append(COMMA);
     sb.append(dataSet.getKnnDistance());
     sb.append(COMMA);
@@ -160,5 +161,22 @@ public class ExcelExport {
     }
     return sb.toString();
   }
+
+  //Prevent producing ',' seperator.
+  public String toString(ArrayList<Integer> list) {
+    Iterator<Integer> it = list.iterator();
+    if (! it.hasNext())
+        return "[]";
+
+    StringBuilder sb = new StringBuilder();
+    sb.append('[');
+    for (;;) {
+        Integer e = it.next();
+        sb.append(e);
+        if (! it.hasNext())
+            return sb.append(']').toString();
+        sb.append(' ');
+    }
+}
 
 }

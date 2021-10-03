@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import src.datastructure.KDTreeIntegers.IntegerTreeNode;
 import src.node.IntegerNode;
 
+ /*
+ * @author: Marco Backman
+ * @email : roni2006@hanmail.net
+ */
+
 public class DataCarrier {
     IntegerTreeNode treeNode;
     IntegerNode resultNode;

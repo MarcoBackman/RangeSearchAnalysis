@@ -2,6 +2,11 @@ package src.utils;
 
 import java.util.ArrayList;
 
+ /*
+ * @author: Marco Backman
+ * @email : roni2006@hanmail.net
+ */
+
 //single case data container
 public class ProfileContainer {
     // common data

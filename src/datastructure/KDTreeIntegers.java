@@ -158,7 +158,6 @@ public class KDTreeIntegers {
     }
    
     //visitation set
-    int comparingAxis = walkingNode.getAxis();
     walkingNode.setVisited();
 
     //left child check
@@ -175,6 +174,8 @@ public class KDTreeIntegers {
       }
     }
     
+    int comparingAxis = walkingNode.getAxis();
+
     //root check before going into the parent
     if (walkingNode.parent != null) {
       Integer currentPointByAxis = walkingNode.getPoints().get(comparingAxis);

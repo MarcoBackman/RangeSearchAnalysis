@@ -19,8 +19,10 @@ import src.utils.ProfileContainer;
  
 class Main {
   //Range over 4 produces integer representation overflow
-  final String INPUT_FILE_NAME = "./data/SMALL_DATA_CASE5_40";
-  final String EXCEL_FILE_NAME = "./data/dataProfile.xlsx";
+  final int CASE_NUMBER = 1;
+  final int POINT_RANGE_LIMIT = 80;
+
+  final String EXCEL_FILE_NAME = "./data/dataProfile.cell";
   File EXCEL_FILE = new File(EXCEL_FILE_NAME);
   ExcelExport excelExport = new ExcelExport();
 
@@ -36,31 +38,66 @@ class Main {
       inputList.add(Integer.parseInt(strArr[i]));
     }
     sc.close();
-    //
-    ProfileContainer singleCaseResult = mainInst.executeAlgorithm(inputList);
-    //export data to Excel file
-    mainInst.exportDataToExcel(singleCaseResult);
+    try {
+      mainInst.excelExport.resetContnet(mainInst.EXCEL_FILE);
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+    for (int i = 1; i <= 12; i++) {
+      //small cases
+      if (i < 5) {
+        int maxRange = i * 10;
+        int numberOfPoints = i * 10;
+        String fileName = "./data/SMALL_DATA_CASE"
+           + maxRange + "_" + (numberOfPoints);
+        for (int numTries= 0 ; numTries < 5; numTries++) {
+          ProfileContainer singleCaseResult
+           = mainInst.executeAlgorithm(inputList, fileName, maxRange);
+          //export data to Excel file
+          mainInst.exportDataToExcel(singleCaseResult);
+        }
+      }
+
+      //large cases
+      else {
+        int maxRange = (i - 4) * 10;
+        int powerBaseTwo = (int)Math.pow(2, i-4);
+        int numberOfPoints = powerBaseTwo * 10;
+        String fileName = "./data/BIG_DATA_CASE"
+         + maxRange + "_" + (numberOfPoints);
+        for (int numTries= 0 ; numTries < 5; numTries++) {
+          ProfileContainer singleCaseResult
+           = mainInst.executeAlgorithm(inputList, fileName, maxRange);
+          //export data to Excel file
+          mainInst.exportDataToExcel(singleCaseResult);
+        }
+      }
+    }
   }
 
-  public ProfileContainer executeAlgorithm(ArrayList<Integer> targetPoints) {
+  public ProfileContainer executeAlgorithm(ArrayList<Integer> targetPoints, String fileName, int range) {
     //read input files
     CoordinateReader coordinateReader
       = new CoordinateReader();
-    coordinateReader.readPointsFromFile(INPUT_FILE_NAME);
+    coordinateReader.readPointsFromFile(fileName);
     ArrayList<ArrayList<Integer>> matrix
       = coordinateReader.getEntireMatrix();
-    ProfileContainer singleProfile = new ProfileContainer(1, 10, 20, targetPoints);
+    ProfileContainer singleProfile
+     = new ProfileContainer(CASE_NUMBER,
+                            range,
+                            matrix.size(),
+                            targetPoints);
 
     //construct sequential
     SequentialAlgorithm sequentialAlgorithm = new SequentialAlgorithm();
     sequentialAlgorithm.buildList(matrix);
     //import construction time
-    singleProfile.setSeqBuildTime(ProcessTimeRecorder.getInSeconds(1));
+    singleProfile.setSeqBuildTime(ProcessTimeRecorder.getInNanoSeconds(1));
 
     //search nearest distance
     DataCarrier result = sequentialAlgorithm.findCloestDistance(targetPoints);
     String seqResultInString = result.toString();
-    singleProfile.setSeqSearchTime(ProcessTimeRecorder.getInSeconds(2));
+    singleProfile.setSeqSearchTime(ProcessTimeRecorder.getInNanoSeconds(2));
     singleProfile.setSeqResultPoints(result.getPoints());
     singleProfile.setSeqDistance((long)result.getDistance());
     System.out.println("Sequential search: " + seqResultInString.toString());
@@ -70,14 +107,14 @@ class Main {
     long kdConstructionTimeStart = System.nanoTime();
     kdTreeInt.buildKDTree();
     ProcessTimeRecorder.KDTreeConstructionTime += System.nanoTime() - kdConstructionTimeStart;
-    singleProfile.setKdBuildTime(ProcessTimeRecorder.getInSeconds(3));
+    singleProfile.setKdBuildTime(ProcessTimeRecorder.getInNanoSeconds(3));
 
     //find point in kd tree
     long kdSearchTimeStart = System.nanoTime();
     DataCarrier kdResult = kdTreeInt.findKDTreeNormal(targetPoints);
     ProcessTimeRecorder.KDTreeSearchTime += System.nanoTime() - kdSearchTimeStart;
     System.out.println("KDTree search: " + kdResult.toString());
-    singleProfile.setKdSearchTime(ProcessTimeRecorder.getInSeconds(4));
+    singleProfile.setKdSearchTime(ProcessTimeRecorder.getInNanoSeconds(4));
     singleProfile.setKdResultPoints(kdResult.getPoints());
     singleProfile.setKdDistance((long)kdResult.getDistance());
 
@@ -86,18 +123,17 @@ class Main {
     kdTreeInt.findKNNAlgorithm(targetPoints,
                                kdResult.getTreeNode());
     ProcessTimeRecorder.KDTreeKNNSearchTime += System.nanoTime() - knnSearchTimeStart;
-    singleProfile.setKnnSearchTime(ProcessTimeRecorder.getInSeconds(5));
-    singleProfile.setKnnResultPoints(kdResult.getPoints());
-    singleProfile.setKnnDistance((long)kdResult.getDistance());
+    singleProfile.setKnnSearchTime(ProcessTimeRecorder.getInNanoSeconds(5));
+    singleProfile.setKnnResultPoints(kdTreeInt.KNN_result.getPoints());
+    singleProfile.setKnnDistance((long)kdTreeInt.KNN_result.getDistance());
     System.out.println("KDTree with KNN search: " + kdTreeInt.KNN_result.toString());
-
+    ProcessTimeRecorder.reset();
     //kdTreeInt.printTree();
     return singleProfile;
   }
 
   private void exportDataToExcel(ProfileContainer data) {
     try { //reset first
-      excelExport.resetContnet(EXCEL_FILE);
       String content = excelExport.generateSingleLine(data);
       excelExport.appendContent(content, EXCEL_FILE);
     } catch (Exception e) {

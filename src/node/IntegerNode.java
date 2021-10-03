@@ -2,6 +2,11 @@ package src.node;
 
 import java.util.ArrayList;
 
+ /*
+ * @author: Marco Backman
+ * @email : roni2006@hanmail.net
+ */
+
 public class IntegerNode {
     IntegerNode next = null;
     ArrayList<Integer> list = new ArrayList<Integer>();

@@ -1,5 +1,10 @@
 package src.utils;
 
+ /*
+ * @author: Marco Backman
+ * @email : roni2006@hanmail.net
+ */
+
 public class ProcessTimeRecorder {
   //in milliseconds
   public static long sequentialConstructionTime = 0;
@@ -17,17 +22,33 @@ public class ProcessTimeRecorder {
    * 1: sequential construction, 2: sequential search,
    * 3: kdtree construction, 4: kdtree search 5: knn search(kdtree excluded)
    */
-  public static double getInSeconds(int index) {
+  public static double getInMilliSeconds(int index) {
     switch(index) {
-      case 1: return sequentialConstructionTime * Math.pow(10, 3);
+      case 1: return sequentialConstructionTime * Math.pow(10, -3);
 
-      case 2: return sequentialSearchTime * Math.pow(10, 3);
+      case 2: return sequentialSearchTime * Math.pow(10, -3);
 
-      case 3: return KDTreeConstructionTime * Math.pow(10, 3);
+      case 3: return KDTreeConstructionTime * Math.pow(10, -3);
 
-      case 4: return KDTreeSearchTime * Math.pow(10, 3);
+      case 4: return KDTreeSearchTime * Math.pow(10, -3);
 
-      case 5: return KDTreeKNNSearchTime * Math.pow(10, 3);
+      case 5: return KDTreeKNNSearchTime * Math.pow(10, -3);
+
+      default: return 0;
+    }
+  }
+
+  public static long getInNanoSeconds(int index) {
+    switch(index) {
+      case 1: return sequentialConstructionTime;
+
+      case 2: return sequentialSearchTime;
+
+      case 3: return KDTreeConstructionTime;
+
+      case 4: return KDTreeSearchTime;
+
+      case 5: return KDTreeKNNSearchTime;
 
       default: return 0;
     }
