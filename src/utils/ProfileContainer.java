@@ -17,19 +17,19 @@ public class ProfileContainer {
 
     // sequential data
     ArrayList<Integer> seqResultPoints = null;
-    long seqDistance = 0;
+    double seqDistance = 0;
     double seqBuildTime = 0;
     double seqSearchTime = 0;
 
     // kdTree data
     ArrayList<Integer> kdResultPoints = null;
-    long kdDistance = 0;
+    double kdDistance = 0;
     double kdBuildTime = 0;
     double kdSearchTime = 0;
 
     // KNN data
     ArrayList<Integer> knnResultPoints = null;
-    long knnDistance = 0;
+    double knnDistance = 0;
     double knnSearchTime = 0;
 
     //constructor
@@ -64,7 +64,7 @@ public class ProfileContainer {
         this.seqResultPoints = seqResultPoints;
     }
 
-    public void setSeqDistance(long seqDistance) {
+    public void setSeqDistance(double seqDistance) {
         this.seqDistance = seqDistance;
     }
 
@@ -80,7 +80,7 @@ public class ProfileContainer {
         return this.seqResultPoints;
     }
 
-    public long getSeqDistance() {
+    public double getSeqDistance() {
         return this.seqDistance;
     }
 
@@ -97,7 +97,7 @@ public class ProfileContainer {
         this.kdResultPoints = kdResultPoints;
     }
 
-    public void setKdDistance(long kdDistance) {
+    public void setKdDistance(double kdDistance) {
         this.kdDistance = kdDistance;
     }
 
@@ -113,7 +113,7 @@ public class ProfileContainer {
         return this.kdResultPoints;
     }
 
-    public long getKdDistance() {
+    public double getKdDistance() {
         return this.kdDistance;
     }
 
@@ -130,7 +130,7 @@ public class ProfileContainer {
         this.knnResultPoints = knnResultPoints;
     }
 
-    public void setKnnDistance(long knnDistance) {
+    public void setKnnDistance(double knnDistance) {
         this.knnDistance = knnDistance;
     }
 
@@ -142,7 +142,7 @@ public class ProfileContainer {
         return this.knnResultPoints;
     }
 
-    public long getKnnDistance() {
+    public double getKnnDistance() {
         return this.knnDistance;
     }
 

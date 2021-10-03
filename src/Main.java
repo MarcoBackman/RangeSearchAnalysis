@@ -99,7 +99,7 @@ class Main {
     String seqResultInString = result.toString();
     singleProfile.setSeqSearchTime(ProcessTimeRecorder.getInNanoSeconds(2));
     singleProfile.setSeqResultPoints(result.getPoints());
-    singleProfile.setSeqDistance((long)result.getDistance());
+    singleProfile.setSeqDistance(result.getDistance());
     System.out.println("Sequential search: " + seqResultInString.toString());
 
     //construct kd tree
@@ -116,7 +116,7 @@ class Main {
     System.out.println("KDTree search: " + kdResult.toString());
     singleProfile.setKdSearchTime(ProcessTimeRecorder.getInNanoSeconds(4));
     singleProfile.setKdResultPoints(kdResult.getPoints());
-    singleProfile.setKdDistance((long)kdResult.getDistance());
+    singleProfile.setKdDistance(kdResult.getDistance());
 
     //KNN algorithm
     long knnSearchTimeStart = System.nanoTime();
@@ -125,7 +125,7 @@ class Main {
     ProcessTimeRecorder.KDTreeKNNSearchTime += System.nanoTime() - knnSearchTimeStart;
     singleProfile.setKnnSearchTime(ProcessTimeRecorder.getInNanoSeconds(5));
     singleProfile.setKnnResultPoints(kdTreeInt.KNN_result.getPoints());
-    singleProfile.setKnnDistance((long)kdTreeInt.KNN_result.getDistance());
+    singleProfile.setKnnDistance(kdTreeInt.KNN_result.getDistance());
     System.out.println("KDTree with KNN search: " + kdTreeInt.KNN_result.toString());
     ProcessTimeRecorder.reset();
     //kdTreeInt.printTree();
