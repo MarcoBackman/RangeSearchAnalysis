@@ -1,7 +1,7 @@
 # <p align="center"> RangeSearchAnalysis </p>
 ## <p align="center"> Algorithm of Analysis - KD-Tree/KNN algorithm </p>
 
-## Main classes that runds individually.
+## Executable main classes.
  * Main.java
       * Takes integer input based on the input files. If input files are in three dimension, user has to put, for example, [5 10 25] separated by the space(exclude brackets). 
       * Executes sequential construction and KD-KNN-tree construction based on the input files in data with specified file name.
