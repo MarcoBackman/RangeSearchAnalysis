@@ -8,6 +8,8 @@
       * If data file for input is empty, CoordinateGen.java execution is required before running Main.java program in order to make arbitrary input files.
       
  * CoordinateGen.java
+      * Prompts user to type in the dimension. This will be the initial dimension setup.
+      * Prompts user to select a file type - Large points, Small points.
 
 ## This project is comprised of three major sections.
 
