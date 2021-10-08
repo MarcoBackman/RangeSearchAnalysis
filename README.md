@@ -51,4 +51,4 @@ For every distance calcuation, Euclidean distance is used.
       >> Construction time consumption in nano seconds </br>
       >> Search time consumption in nano seconds </br>
 
-    Time is measured by using ProcessTimeRecorder(System.nanoTime).
+Time is measured by using ProcessTimeRecorder(System.nanoTime).
