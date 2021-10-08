@@ -1,5 +1,5 @@
 # <p align="center"> RangeSearchAnalysis </p>
-## <p align="center"> Algorithm of Analysis individual project #1 - Range searching algorithm </p>
+## <p align="center"> Algorithm of Analysis - KD-Tree/KNN algorithm </p>
 
 ## Main classes that runds individually.
  * Main.java
