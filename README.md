@@ -22,9 +22,9 @@ For every distance calcuation, Euclidean distance is used.
 ### 2. Data structures.
   * Linked List (**SequentialAlgorithm.java**).
     * insert(list)
-      > Append additional coordinate points to the end
+      > Append additional coordinate points to the end </br>
     * findClosestDistance(targetPoints)
-      > Visit every node to verify the shortest distance   
+      > Visit every node to verify the shortest distance </br>
  
   * KD-Tree (**KDTreeIntegers.java**).
     * Class.AxisSort
@@ -40,15 +40,15 @@ For every distance calcuation, Euclidean distance is used.
 
 ### 3. Result exportation.
    * All summary data are exported into .cell file. Data contains:
-      > General cell
-      >> Numeric value range.
-      >> Number of points.
-      >> Desired coordinationto look up.
+      > General cell 
+      >> Numeric value range. </br>
+      >> Number of points. </br>
+      >> Desired coordinationto look up. </br>
       
       > Each cell contains
-      >> Closest coordinate points found
-      >> Distance value in double
-      >> Construction time consumption in nano seconds
-      >> Search time consumption in nano seconds
+      >> Closest coordinate points found </br>
+      >> Distance value in double </br>
+      >> Construction time consumption in nano seconds </br>
+      >> Search time consumption in nano seconds </br>
 
     Time is measured by using ProcessTimeRecorder(System.nanoTime).
