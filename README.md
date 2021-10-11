@@ -1,6 +1,6 @@
 # <p align="center"> RangeSearchAnalysis </p>
-## <p align="center"> Algorithm of Analysis - KD-Tree/KNN algorithm </p>
-## Florida Tech 2021 Individual Project
+## <p align="center"> Algorithm of Analysis - KD-Tree/KNN algorithm.</p><p align="center"> Florida Tech 2021 Individual Project</p> 
+
 
 ## Executable main classes.
  * Main.java
