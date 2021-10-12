@@ -47,7 +47,7 @@ For every distance calcuation, Euclidean distance is used.
       > find closest distance from the targetPoints with the result node from KD-Tree search
 
 Results from the terminal
-  <div align="center">
+  <div align="left">
     <img src="img/runtime_result.png">  
   </div>
 
@@ -66,7 +66,7 @@ Results from the terminal
       >> Desired coordinationto look up. </br>
       
       </br>
-        <div align="center">
+        <div align="left">
           <img src="img/terminal_results_to_excel.png">  
         </div>
       </br>
