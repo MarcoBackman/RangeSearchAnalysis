@@ -17,6 +17,11 @@
 For every distance calcuation, Euclidean distance is used.
 
 ### 1. Point Generator(**CoordinateGen.java**).
+
+<div align="left">
+  <img src="img/data_files.png">  
+</div>
+
   * Generates arbiturary points in random order.
       * Matrix dimesion determined by getting users input.
       * Matrix point range and number of points grow larger.
@@ -41,12 +46,30 @@ For every distance calcuation, Euclidean distance is used.
     * findKNNAlgorithm(targetPoints, node)
       > find closest distance from the targetPoints with the result node from KD-Tree search
 
+Results from the terminal
+  <div align="center">
+    <img src="img/runtime_result.png">  
+  </div>
+
 ### 3. Result exportation.
+  </br>
+  <div align="center">
+    <img src="img/exel_import.png">  
+  </div>
+  </br>
+  </br>
+
    * All summary data are exported into .cell file. Data contains:
       > General cell 
       >> Numeric value range. </br>
       >> Number of points. </br>
       >> Desired coordinationto look up. </br>
+      
+      </br>
+        <div align="center">
+          <img src="img/terminal_results_to_excel.png">  
+        </div>
+      </br>
       
       > Each cell contains
       >> Closest coordinate points found </br>
@@ -55,3 +78,8 @@ For every distance calcuation, Euclidean distance is used.
       >> Search time consumption in nano seconds </br>
 
 Time is measured by using ProcessTimeRecorder(System.nanoTime).
+
+Graphical data based on the program
+<div align="center">
+  <img src="img/graphs.png">  
+</div>
