@@ -5,6 +5,9 @@
 
 [![Watch the video](https://img.youtube.com/vi/ivdmGcZo6U8/0.jpg)](https://youtu.be/ivdmGcZo6U8)
 
+# Analysis Document
+[Open with google docs](https://docs.google.com/document/d/1ID8N696E-MqTVcrqqYRdPuos8pG6wsb-/edit?usp=sharing&ouid=116846183481799249714&rtpof=true&sd=true)
+
 ## Executable main classes.
  * Main.java
       * Takes integer input based on the input files. If input files are in three dimension, user has to put, for example, [5 10 25] separated by the space(exclude brackets). 
