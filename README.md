@@ -6,7 +6,7 @@
 [![Watch the video](https://img.youtube.com/vi/ivdmGcZo6U8/0.jpg)](https://youtu.be/ivdmGcZo6U8)
 
 ## Analysis Document
-[Open with google docs](https://docs.google.com/document/d/e/2PACX-1vRfujHl7NoO64K89jJHNc7IfcCo9vlo9-kAUyrkAYfiRDCoFS9X9vtd2ILc5PSRWQ/pub)
+[Open with google docs](https://drive.google.com/file/d/1w_RnXC_rbNigIPjn5Kex2izU_LK_bRBy/view?usp=sharing)
 
 ## Executable main classes.
  * Main.java
